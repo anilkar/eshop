@@ -1,6 +1,4 @@
 package com.niit.EshopBackend;
-
-
 import static org.junit.Assert.*;
 
 import org.junit.BeforeClass;
@@ -9,21 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import com.niit.shoppingcart.dao.UserDAO;
-import com.niit.shoppingcart.model.User;
+import com.niit.shoppingcart.dao.CategoryDAO;
+import com.niit.shoppingcart.model.Category;
 
 import junit.framework.Assert;
 
-public class UserDAOTestcase {
+public class CategoryDAOTestcase {
 
 	//Autowire - DAO, DO, context
 	
 	
 	@Autowired
-	static UserDAO userDAO;
+	static CategoryDAO CategoryDAO;
 	
 	@Autowired
-	static User  user;
+	static Category  Category;
 	
 	@Autowired
 	static AnnotationConfigApplicationContext context;
@@ -42,9 +40,9 @@ public class UserDAOTestcase {
 		
 		context.refresh();
 		
-		user = (User) context.getBean("user");
+		Category = (Category) context.getBean("Category");
 		
-		userDAO = (UserDAO) context.getBean("userDAO");
+		CategoryDAO = (CategoryDAO) context.getBean("CategoryDAO");
 	}
 	
 
@@ -53,17 +51,21 @@ public class UserDAOTestcase {
 	{
 		
 		//you have create /insert new row in db
-		//provide values for user
-		
-		user.setId(2);
-		user.setName("sam");
-		user.setContact("943837742");
-		user.setMail("anil.kar18@gmail.com");
-		user.setPassword("123456");
-		user.setRole("ROLE_USER");
+		//provide values for Category
 		
 		
-	 Assert.assertEquals("saveTestCase", true, 	userDAO.save(user));
+		Category.setCatid("c002");
+		Category.setCatname("shop");
+		Category.setCatdesc("laptop");
+	
+		
+		
+	 Assert.assertEquals("saveTestCase", true, 	CategoryDAO.save(Category));
 		
 	}
 }
+
+
+
+
+

@@ -2,13 +2,16 @@ package com.niit.shoppingcart.daoimpl;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.niit.shoppingcart.dao.UserDAO;
 import com.niit.shoppingcart.model.User;
-
+@Repository
 public class UserDAOimpl implements UserDAO {
 	
 	
@@ -20,52 +23,50 @@ public class UserDAOimpl implements UserDAO {
 		this.sessionFactory = sessionFactory;
 	
 	}
-	
-	public List<User> list() {
-		setHq1("from User");
-		String hq1 = null;
-		@SuppressWarnings("unchecked")
-		Query<User> query = sessionFactory.getCurrentSession().createQuery(hq1);
-		return query.list();
-		
+	@Transactional
+	public User get(int id) {
+
+		return (User) sessionFactory.getCurrentSession().get(User.class, id);
+
 	}
 
-	public User get(String id) {
-	
-		return (User) sessionFactory.getCurrentSession().get(User.class, id);
+	@Transactional
+	public User validate(int id, String password) {
+		String hql = "from User where id ='" + id + "'  and password='" + password + "'";
+
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+
+		return (User) query.uniqueResult();
+}
+
+	@Transactional
+	public boolean save(User user) {
+		try {
+			sessionFactory.getCurrentSession().save(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
 		}
 
-	@SuppressWarnings("unchecked")
-	public User validate(String id, String password) {
-	String hq1 = "From user where id ='" + id +"' and password='" + password + "'";
-	Query<User> query =sessionFactory.getCurrentSession().createQuery(hq1);
-	return (User)query.uniqueResult();
+		return true;
 	}
 
-	public boolean save(User user) {
+	@Transactional
+	public boolean update(User user) {
+		try {
+			sessionFactory.getCurrentSession().update(user);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	public List<User> list() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
-		try{
-			 sessionFactory.getCurrentSession().save(user);
-		}catch (Exception e){
-			e.printStackTrace();	
-	return false;
-	}
-    return true;
-	}
 
-	 public boolean update(User user)
-	 {
-		 
-		 return true;
-	 }
-
-	public String getHq1() {
-		return hq1;
-	}
-
-	public void setHq1(String hq1) {
-		this.hq1 = hq1;
-	}
-	
-	}
-	
+}

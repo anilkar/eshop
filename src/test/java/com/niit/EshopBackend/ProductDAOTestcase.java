@@ -1,6 +1,5 @@
 package com.niit.EshopBackend;
 
-
 import static org.junit.Assert.*;
 
 import org.junit.BeforeClass;
@@ -9,21 +8,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import com.niit.shoppingcart.dao.UserDAO;
-import com.niit.shoppingcart.model.User;
+import com.niit.shoppingcart.dao.ProductDAO;
+import com.niit.shoppingcart.model.Product;
 
 import junit.framework.Assert;
 
-public class UserDAOTestcase {
+public class ProductDAOTestcase {
 
 	//Autowire - DAO, DO, context
 	
 	
 	@Autowired
-	static UserDAO userDAO;
+	static ProductDAO ProductDAO;
 	
 	@Autowired
-	static User  user;
+	static Product  Product;
 	
 	@Autowired
 	static AnnotationConfigApplicationContext context;
@@ -42,9 +41,9 @@ public class UserDAOTestcase {
 		
 		context.refresh();
 		
-		user = (User) context.getBean("user");
+		Product = (Product) context.getBean("Product");
 		
-		userDAO = (UserDAO) context.getBean("userDAO");
+		ProductDAO = (ProductDAO) context.getBean("ProductDAO");
 	}
 	
 
@@ -53,17 +52,18 @@ public class UserDAOTestcase {
 	{
 		
 		//you have create /insert new row in db
-		//provide values for user
+		//provide values for Product
 		
-		user.setId(2);
-		user.setName("sam");
-		user.setContact("943837742");
-		user.setMail("anil.kar18@gmail.com");
-		user.setPassword("123456");
-		user.setRole("ROLE_USER");
+
+		Product.setPid("C001");
+		product.setName("Electronics");
+		product.setPrice(10000);
+		product.setCategory("Smart phone");
+		product.setSupplier("DS Telecommunication");
+		product.setStock()
+		product.setDescription("Mobiles");
 		
-		
-	 Assert.assertEquals("saveTestCase", true, 	userDAO.save(user));
+	 Assert.assertEquals("saveTestCase", true, 	ProductDAO.save(Product));
 		
 	}
 }

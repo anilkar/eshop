@@ -9,8 +9,10 @@ import org.springframework.stereotype.Component;
 @Table
 @Component
 public class User {
-private String id;
-	
+
+	@Id
+private int id;
+
 	private String name;
 	
 	private String password;
@@ -23,12 +25,12 @@ private String id;
 	private String role;
 
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
