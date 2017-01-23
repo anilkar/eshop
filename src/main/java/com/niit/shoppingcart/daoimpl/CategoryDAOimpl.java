@@ -16,31 +16,55 @@ import com.niit.shoppingcart.model.User;
 @Repository
 public class CategoryDAOimpl implements CategoryDAO {
 
+
+	@Autowired
+	private SessionFactory sessionFactory;
+	public CategoryDAOimpl(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+	@Transactional
 	public List<Category> list() {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "from Category";
+
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+
+		return query.list();
 	}
 
+	@Transactional
 	public Category get(String catid) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return (Category) sessionFactory.getCurrentSession().get(Category.class, catid);
+
 	}
+	
+	
 
 
-
+	@Transactional
 	public boolean save(Category category) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			sessionFactory.getCurrentSession().save(category);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		return true;
 	}
 
+	@Transactional
 	public boolean update(Category category) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public Category validate(String catid, String password) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			sessionFactory.getCurrentSession().update(category);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 	
+
+}

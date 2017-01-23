@@ -2,6 +2,7 @@ package com.niit.shoppingcart.daoimpl;
 
 import java.util.List;
 
+import javax.swing.plaf.synth.SynthSeparatorUI;
 import javax.transaction.Transactional;
 
 import org.hibernate.HibernateException;
@@ -25,28 +26,26 @@ public class ProductDAOimpl implements ProductDAO {
 		this.sessionFactory = sessionFactory;
 	}
 	@Transactional
+	
 	public List<Product> list() {
-		String hql = "from Product";
+		String hql = "from Products";
 
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 
 		return query.list();
 	}
-
+	
 	@Transactional
 	public Product get(String pid) {
-
 		return (Product) sessionFactory.getCurrentSession().get(Product.class, pid);
 
 	}
 	
-	
-
-
 	@Transactional
-	public boolean save(Product Product) {
+	public boolean save(Product products) {
 		try {
-			sessionFactory.getCurrentSession().save(Product);
+			System.out.println("data inserted");
+			sessionFactory.getCurrentSession().save(products);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
@@ -54,22 +53,18 @@ public class ProductDAOimpl implements ProductDAO {
 
 		return true;
 	}
-
-
-			
-		
-	public Product (String pid, String password) {
+	
+	@Transactional
+	public boolean update(Product products) {
 		try {
-			sessionFactory.getCurrentSession().update(ProductDAOimpl);
-	public Product validate(String pid, String password) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+			sessionFactory.getCurrentSession().update(products);
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			return false;
 		}
-		
-		
-		
-		
-		
-		
-		
+		return true;
+	}
+	
+	
+}		

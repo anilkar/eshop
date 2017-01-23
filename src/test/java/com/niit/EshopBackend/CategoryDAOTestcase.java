@@ -18,10 +18,10 @@ public class CategoryDAOTestcase {
 	
 	
 	@Autowired
-	static CategoryDAO CategoryDAO;
+	static CategoryDAO categoryDAO;
 	
 	@Autowired
-	static Category  Category;
+	static Category  category;
 	
 	@Autowired
 	static AnnotationConfigApplicationContext context;
@@ -40,9 +40,9 @@ public class CategoryDAOTestcase {
 		
 		context.refresh();
 		
-		Category = (Category) context.getBean("Category");
+		category = (Category) context.getBean("Category");
 		
-		CategoryDAO = (CategoryDAO) context.getBean("CategoryDAO");
+		categoryDAO = (CategoryDAO) context.getBean("CategoryDAO");
 	}
 	
 
@@ -54,13 +54,13 @@ public class CategoryDAOTestcase {
 		//provide values for Category
 		
 		
-		Category.setCatid("c002");
-		Category.setCatname("shop");
-		Category.setCatdesc("laptop");
+		category.setCatid("c001");
+		category.setCatname("mobile");
+		category.setCatdesc("qwerty");
 	
 		
 		
-	 Assert.assertEquals("saveTestCase", true, 	CategoryDAO.save(Category));
+	 Assert.assertEquals("saveTestCase", true, 	categoryDAO.save(category));
 		
 	}
 }

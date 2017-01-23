@@ -15,8 +15,17 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.niit.shoppingcart.dao.CategoryDAO;
+import com.niit.shoppingcart.dao.ProductDAO;
+import com.niit.shoppingcart.dao.SupplierDAO;
 import com.niit.shoppingcart.dao.UserDAO;
+import com.niit.shoppingcart.daoimpl.CategoryDAOimpl;
+import com.niit.shoppingcart.daoimpl.ProductDAOimpl;
+import com.niit.shoppingcart.daoimpl.SupplierDAOimpl;
 import com.niit.shoppingcart.daoimpl.UserDAOimpl;
+import com.niit.shoppingcart.model.Category;
+import com.niit.shoppingcart.model.Product;
+import com.niit.shoppingcart.model.Supplier;
 import com.niit.shoppingcart.model.User;
 
 
@@ -75,12 +84,32 @@ System.out.println("db");
 		return transactionManager;
 	}
 	@Autowired
-    @Bean(name = "userDAO")
+    @Bean(name = "UserDAO")
     public UserDAO getUserDao(SessionFactory sessionFactory) 
 	{
     	return new UserDAOimpl(sessionFactory);
     }
 
+	@Autowired
+    @Bean(name = "CategoryDAO")
+    public CategoryDAO getCategoryDao(SessionFactory sessionFactory) 
+	{
+		return new CategoryDAOimpl(sessionFactory);
+    }
+
 	
+	@Autowired
+    @Bean(name = "ProductDAO")
+    public ProductDAO getProductDao(SessionFactory sessionFactory) 
+	{
+		return new ProductDAOimpl(sessionFactory);
+    }
+
+	@Autowired
+    @Bean(name = "SupplierDAO")
+    public SupplierDAO getSupplierDao(SessionFactory sessionFactory) 
+	{
+		return new SupplierDAOimpl(sessionFactory);
+    }
 
 }

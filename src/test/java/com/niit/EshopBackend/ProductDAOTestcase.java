@@ -19,10 +19,10 @@ public class ProductDAOTestcase {
 	
 	
 	@Autowired
-	static ProductDAO ProductDAO;
+	static ProductDAO productDAO;
 	
 	@Autowired
-	static Product  Product;
+	static Product  product;
 	
 	@Autowired
 	static AnnotationConfigApplicationContext context;
@@ -41,9 +41,9 @@ public class ProductDAOTestcase {
 		
 		context.refresh();
 		
-		Product = (Product) context.getBean("Product");
+		product= (Product) context.getBean("Product");
 		
-		ProductDAO = (ProductDAO) context.getBean("ProductDAO");
+		productDAO = (ProductDAO) context.getBean("ProductDAO");
 	}
 	
 
@@ -55,15 +55,23 @@ public class ProductDAOTestcase {
 		//provide values for Product
 		
 
-		Product.setPid("C001");
+	
+	
+		product.setPid("C002");
 		product.setName("Electronics");
 		product.setPrice(10000);
-		product.setCategory("Smart phone");
-		product.setSupplier("DS Telecommunication");
-		product.setStock()
-		product.setDescription("Mobiles");
+		product.setCategory("c001");
+		product.setSupplier("Gupta Distributor");
+		product.setStock("5000");
+	
 		
-	 Assert.assertEquals("saveTestCase", true, 	ProductDAO.save(Product));
+		
+		
+		 Assert.assertEquals("saveTestCase", true, 	productDAO.save(product));
+			
+		}
+		
+		
+		
 		
 	}
-}

@@ -21,20 +21,20 @@ public class Product {
 	@Id
 	private String  pid;
 	private String name;
-	private String pcategory;
 	private double price;
-	
-	public Supplier getSupplier() {
+	private String stock;
+
+	public String getSupplier() {
 		return supplier;
 	}
-	public void setSupplier(Supplier supplier) {
-		this.supplier = supplier;
+	public void setSupplier(String string) {
+		this.supplier = string;
 	}
-	public String getcatid() {
+	public String getCatid() {
 		return catid;
 	}
-	public void setcatid(String category_id) {
-		this.catid = category_id;
+	public void setCatid(String catid) {
+		this.catid = catid;
 	}
 	
 
@@ -51,24 +51,25 @@ public class Product {
 	private String sid;
 	
 	@ManyToOne
-    @JoinColumn(name="category_id", nullable = false, updatable = false, insertable = false)
-   	private Category category;
+    @JoinColumn(name="catid", nullable = false, updatable = false, insertable = false)
+   	private String category;
 	
-	public Category getCategory() {
+	public String getCategory() {
 		return category;
 	}
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setCategory(String string) {
+		this.category = string;
 	}
 	
 	@ManyToOne
     @JoinColumn(name="sid",nullable = false, updatable = false, insertable = false)
-	private Supplier supplier;
-	public String getId() {
-		return sid;
+	private String supplier;
+	
+	public String getPid() {
+		return pid;
 	}
-	public void setId(String id) {
-		this.pid = id;
+	public void setPid(String pid) {
+		this.pid = pid;
 	}
 	public String getName() {
 		return name;
@@ -76,20 +77,18 @@ public class Product {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getcategory() {
-		return pcategory;
-	}
-	public void setDescription(String description) {
-		this.pcategory = description;
-	}
 	public double getPrice() {
 		return price;
 	}
 	public void setPrice(double price) {
 		this.price = price;
 	}
+	public String getStock() {
+		return stock;
+	}
+	public void setStock(String stock) {
+		this.stock = stock;
+	}
 	
 	
-	
-
 }

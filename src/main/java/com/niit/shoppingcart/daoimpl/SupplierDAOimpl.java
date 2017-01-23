@@ -25,6 +25,7 @@ public class SupplierDAOimpl implements SupplierDAO {
 	}
 	
 	@Transactional
+	
 	public List<Supplier> list() {
 		String hql = "from Supplier";
 
@@ -39,23 +40,26 @@ public class SupplierDAOimpl implements SupplierDAO {
 
 	}
 	@Transactional
-	public boolean save(Supplier Supplier) {
+	public boolean save(Supplier supplier) {
 		try {
-			sessionFactory.getCurrentSession().save(Supplier);
-		} catch (Exception e) 
-		{
+			sessionFactory.getCurrentSession().save(supplier);
+		} catch (Exception e) {
 			e.printStackTrace();
-			
+			return false;
 		}
-		return false;
+
+		return true;
 	}
-
-	
-
-	public boolean update(Supplier Supplier) {
+	@Transactional
+	public boolean update(Supplier supplier) {
 		try {
-			sessionFactory.getCurrentSession().update(Supplier);
-		
+			sessionFactory.getCurrentSession().update(supplier);
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
-		return false;
+
 }
