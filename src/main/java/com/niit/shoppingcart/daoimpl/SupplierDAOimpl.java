@@ -25,7 +25,6 @@ public class SupplierDAOimpl implements SupplierDAO {
 	}
 	
 	@Transactional
-	
 	public List<Supplier> list() {
 		String hql = "from Supplier";
 
@@ -54,6 +53,17 @@ public class SupplierDAOimpl implements SupplierDAO {
 	public boolean update(Supplier supplier) {
 		try {
 			sessionFactory.getCurrentSession().update(supplier);
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	public boolean delete(Supplier supplier) {
+		try {
+			sessionFactory.getCurrentSession().delete(supplier);
 		} catch (Exception e) {
 			
 			e.printStackTrace();

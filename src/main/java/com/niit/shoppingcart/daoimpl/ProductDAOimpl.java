@@ -2,21 +2,19 @@ package com.niit.shoppingcart.daoimpl;
 
 import java.util.List;
 
-import javax.swing.plaf.synth.SynthSeparatorUI;
 import javax.transaction.Transactional;
-
 import org.hibernate.HibernateException;
+
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import com.niit.shoppingcart.dao.ProductDAO;
-import com.niit.shoppingcart.model.Category;
-import com.niit.shoppingcart.model.Product;
-import com.niit.shoppingcart.model.User;
 
-@Repository
+import com.niit.shoppingcart.model.Product;
+
+
+@Repository("productDAO")
 public class ProductDAOimpl implements ProductDAO {
 
 	
@@ -24,11 +22,11 @@ public class ProductDAOimpl implements ProductDAO {
 	private SessionFactory sessionFactory;
 	public ProductDAOimpl(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
+			
 	}
 	@Transactional
-	
 	public List<Product> list() {
-		String hql = "from Products";
+		String hql = "from Product";
 
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 
@@ -42,10 +40,10 @@ public class ProductDAOimpl implements ProductDAO {
 	}
 	
 	@Transactional
-	public boolean save(Product products) {
+	public boolean save(Product product) {
 		try {
-			System.out.println("data inserted");
-			sessionFactory.getCurrentSession().save(products);
+			System.out.println("e1");
+			sessionFactory.getCurrentSession().save(product);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
@@ -55,9 +53,11 @@ public class ProductDAOimpl implements ProductDAO {
 	}
 	
 	@Transactional
-	public boolean update(Product products) {
+	public boolean update(Product product) {
 		try {
-			sessionFactory.getCurrentSession().update(products);
+			sessionFactory.getCurrentSession().update(product);
+		
+		
 		} catch (Exception e) {
 			
 			e.printStackTrace();
@@ -65,6 +65,28 @@ public class ProductDAOimpl implements ProductDAO {
 		}
 		return true;
 	}
-	
-	
-}		
+	public boolean delete(Product product) {
+		try{
+			sessionFactory.getCurrentSession().delete(product);
+			
+			}
+catch (Exception e) {
+			
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	public boolean create(Product product) {
+		try{
+			sessionFactory.getCurrentSession().delete(product);
+			
+			}
+catch (Exception e) {
+			
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	}

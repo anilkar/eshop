@@ -4,25 +4,33 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.niit.shoppingcart.dao.UserDAO;
 import com.niit.shoppingcart.model.User;
+
 @Repository
 public class UserDAOimpl implements UserDAO {
-	
-	
+
 	@Autowired
-    private SessionFactory sessionFactory;
-	private String hq1;
-	
-	public UserDAOimpl(SessionFactory sessionFactory){
+	private SessionFactory sessionFactory;
+	public UserDAOimpl(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
-	
 	}
+	@Transactional
+	public List<User> list() {
+		String hql = "from User";
+
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+
+		return query.list();
+	}
+
+	
 	@Transactional
 	public User get(int id) {
 
@@ -62,9 +70,9 @@ public class UserDAOimpl implements UserDAO {
 		}
 		return true;
 	}
-	public List<User> list() {
+	public boolean delete(User user) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	

@@ -1,6 +1,5 @@
 package com.niit.shoppingcart.config;
 
-
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -21,6 +20,7 @@ import com.niit.shoppingcart.dao.SupplierDAO;
 import com.niit.shoppingcart.dao.UserDAO;
 import com.niit.shoppingcart.daoimpl.CategoryDAOimpl;
 import com.niit.shoppingcart.daoimpl.ProductDAOimpl;
+import com.niit.shoppingcart.daoimpl.ProductDAOimpl;
 import com.niit.shoppingcart.daoimpl.SupplierDAOimpl;
 import com.niit.shoppingcart.daoimpl.UserDAOimpl;
 import com.niit.shoppingcart.model.Category;
@@ -29,87 +29,85 @@ import com.niit.shoppingcart.model.Supplier;
 import com.niit.shoppingcart.model.User;
 
 
-
 @Configuration
 @ComponentScan("com.niit.shoppingcart")
 @EnableTransactionManagement
 public class ApplicationContextConfig {
-
 	@Bean(name = "dataSource")
 	public DataSource getH2DataSource() {
-System.out.println("db");
-		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-			
-		dataSource.setUrl("jdbc:h2:tcp://localhost/~/anil");
-
-		dataSource.setDriverClassName("org.h2.Driver");
-
-		dataSource.setUsername("sa");
-		dataSource.setPassword("");
-		
-		
-		return dataSource;
+	    DriverManagerDataSource dataSource = new DriverManagerDataSource();
+	    dataSource.setDriverClassName("org.h2.Driver");
+	    dataSource.setUrl("jdbc:h2:tcp://localhost/~/anil");
+	    
+	    dataSource.setUsername("sa");
+	    dataSource.setPassword("");
+	   
+System.out.println("database");
+	    return  dataSource;
 	}
-
 	
-	private Properties getHibernateProperties() {
-		System.out.println("prop");
-		Properties properties = new Properties();
-		properties.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
-		properties.put("hibernate.show_sql", "true");
-		return properties;
-	}
+  private Properties getHibernateProperties()
+  {
+	  Properties properties =new Properties();
+	 properties.put("hibernate.dialect","org.hibernate.dialect.H2Dialect");
+	properties.put("hbm2ddl.auto","update");
+	  System.out.println("prop");
+	  return properties;
+  }
+  @Autowired
+  @Bean(name="sessionFactory")
+  public SessionFactory getSessionFactory(DataSource dataSource)
+  {
+	 LocalSessionFactoryBuilder sessionBuilder=new LocalSessionFactoryBuilder(dataSource); 
+	 
+	 sessionBuilder.addProperties(getHibernateProperties());
+	 
+	 sessionBuilder.addAnnotatedClass(Category.class);
+	 sessionBuilder.addAnnotatedClass(Supplier.class);
+	 sessionBuilder.addAnnotatedClass(Product.class);
+	 sessionBuilder.addAnnotatedClass(User.class);
+	 System.out.println("session");
+	 return sessionBuilder.buildSessionFactory();
+  }
+  @Autowired
+  @Bean(name = "transactionManager")
+  public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory) {
 
-	@Autowired
-	@Bean(name = "sessionFactory")
-	public SessionFactory getSessionFactory(DataSource dataSource) {
-		System.out.println("sess");
-		LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource);
-		sessionBuilder.addProperties(getHibernateProperties());
-		sessionBuilder.addAnnotatedClass(User.class);
-		sessionBuilder.addAnnotatedClass(Category.class);
-		sessionBuilder.addAnnotatedClass(Product.class);
-		sessionBuilder.addAnnotatedClass(Supplier.class);
-
-
-		return sessionBuilder.buildSessionFactory();
-	}
-
-	@Autowired
-	@Bean(name = "transactionManager")
-	public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory) {
-		System.out.println("ses fac");
-		HibernateTransactionManager transactionManager = new HibernateTransactionManager(sessionFactory);
-
-		return transactionManager;
-	}
-	@Autowired
-    @Bean(name = "UserDAO")
-    public UserDAO getUserDao(SessionFactory sessionFactory) 
+      HibernateTransactionManager transactionManager = new   HibernateTransactionManager(sessionFactory);
+     
+      return transactionManager;
+  }
+  
+  @Autowired
+  @Bean(name = "categoryDAO")
+  public CategoryDAO getCategoryDAO(SessionFactory sessionFactory) 
 	{
-    	return new UserDAOimpl(sessionFactory);
-    }
-
-	@Autowired
-    @Bean(name = "CategoryDAO")
-    public CategoryDAO getCategoryDao(SessionFactory sessionFactory) 
+	  
+	  System.out.println("catdao");
+  	return new CategoryDAOimpl(sessionFactory);
+  }
+  @Autowired
+  @Bean(name = "supplierDAO")
+  public SupplierDAO getSupplierDAO(SessionFactory sessionFactory) 
 	{
-		return new CategoryDAOimpl(sessionFactory);
-    }
-
-	
-	@Autowired
-    @Bean(name = "ProductDAO")
-    public ProductDAO getProductDao(SessionFactory sessionFactory) 
+	  
+	  System.out.println("dao");
+  	return new SupplierDAOimpl(sessionFactory);
+  }
+  @Autowired
+  @Bean(name = "productDAO")
+  public ProductDAO getProductDAO(SessionFactory sessionFactory) 
 	{
-		return new ProductDAOimpl(sessionFactory);
-    }
-
-	@Autowired
-    @Bean(name = "SupplierDAO")
-    public SupplierDAO getSupplierDao(SessionFactory sessionFactory) 
+	  
+	  System.out.println("dao");
+  	return new ProductDAOimpl(sessionFactory);
+  }
+  @Autowired
+  @Bean(name = "userDAO")
+  public UserDAO getUserDAO(SessionFactory sessionFactory) 
 	{
-		return new SupplierDAOimpl(sessionFactory);
-    }
-
+	  
+	  System.out.println("dao");
+  	return new UserDAOimpl(sessionFactory);
+  }
 }
